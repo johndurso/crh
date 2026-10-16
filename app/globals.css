@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand palette */
+  --color-navy: #013882;
+  --color-navy-700: #012d69; /* hover / deep sections (darker step of brand navy) */
+  --color-navy-900: #011d45;
+  --color-gray: #919191;
+  --color-light: #f2f2f2;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  /* Body text: black at 80% keeps WCAG AA contrast while softening long reads */
+  --color-ink: #1f1f1f;
+  --color-muted: #555555; /* AA-safe secondary text; brand gray #919191 is used for rules & accents only */
+
+  --font-serif: var(--font-plex-serif), "IBM Plex Serif", Georgia, serif;
+  --font-sans: var(--font-plex-sans), "IBM Plex Sans Devanagari", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --breakpoint-xs: 30rem;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6.5rem;
+  }
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+  h1, h2, h3, h4 {
+    @apply font-serif text-black;
+    line-height: 1.15;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  ::selection { background: var(--color-navy); color: #fff; }
+  :focus-visible {
+    outline: 2px solid var(--color-navy);
+    outline-offset: 3px;
+  }
+  .on-dark :focus-visible { outline-color: #fff; }
+}
+
+@utility container-x {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+  @media (width >= 40rem) { padding-inline: 2rem; }
+}
+@utility eyebrow {
+  @apply inline-flex items-center gap-3 text-[0.78rem] font-semibold uppercase tracking-[0.18em];
+  &::before { content: ""; display: block; height: 1px; width: 2rem; background: currentColor; }
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-sm px-6 text-[0.95rem] font-semibold leading-none transition-colors duration-200;
+  min-height: 3rem;
+}
+@utility btn-primary { @apply btn bg-navy text-white hover:bg-navy-700; }
+@utility btn-light { @apply btn bg-white text-navy hover:bg-light; }
+@utility btn-outline { @apply btn border border-navy text-navy hover:bg-navy hover:text-white; }
+@utility btn-outline-light { @apply btn border border-white/60 text-white hover:border-white hover:bg-white hover:text-navy; }
+@utility prose-crh {
+  & > * + * { margin-top: 1.25em; }
+  & h2 { @apply mt-12 text-2xl md:text-[1.75rem]; }
+  & a { @apply font-medium text-navy underline decoration-gray/60 underline-offset-4 hover:decoration-navy; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
